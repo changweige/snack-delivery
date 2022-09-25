@@ -1,0 +1,27 @@
+version = "demo"
+workspace = "/home/gechangwei/nydus-delivery"
+package = "containerd-nydus"
+
+[projects]
+nydus-snapshotter = { git = "git@github.com:containerd/nydus-snapshotter.git", branch = "main" }
+containerd = { git = "git@github.com:containerd/containerd.git", tag = "main" }
+image-service = { git = "git@github.com:dragonflyoss/image-service.git", branch = "master" }
+
+[artifacts.containerd]
+builder = "make"
+bins = ["containerd", "containerd-shim-runc-v2", "containerd-shim"]
+bins_dir = "bin"
+
+[artifacts.nydus-snapshotter]
+builder = "make"
+bins = ["containerd-nydus-grpc"]
+bins_dir = "bin"
+
+[artifacts.image-service]
+builder = "make release"
+bins = ["nydusd", "nydus-image", "nydusctl"]
+bins_dir = "target/release"
+
+[ship]
+path = "/home/gechangwei/nydus-release"
+remote = ""
